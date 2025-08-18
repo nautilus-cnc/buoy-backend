@@ -1,0 +1,15 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.swp
+.vscode/
+
+# Logs
+*.log
+
+# configs with secrets
+appsettings.json
+appsettings.*.json
