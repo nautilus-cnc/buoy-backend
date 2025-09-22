@@ -11,16 +11,18 @@ builder.Services.AddSwaggerGen();
 // Register the email service
 builder.Services.AddScoped<IEmailService, EmailService>();
 
-// Add CORS policy for frontend integration
+// CORS policy: allow local dev and your Azure Static Web App
 const string CorsPolicy = "FrontendDev";
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy(CorsPolicy, p => p
-        .WithOrigins("http://localhost:3000")
+        .WithOrigins(
+            "http://localhost:3000",
+            "https://zealous-water-0d99f0a0f.2.azurestaticapps.net" // ← your SWA origin
+        )
         .AllowAnyHeader()
         .AllowAnyMethod());
 });
-
 
 var app = builder.Build();
 
@@ -34,6 +36,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors(CorsPolicy);
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
